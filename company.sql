@@ -1,10 +1,14 @@
+-- This file is responsible for creating and populating the tables of a company
+-- relational database.
+
 CREATE SCHEMA company;
 
 SET search_path TO company;
 
+-- In case if I needa drop all my tables
+DROP TABLE department, dependent, dept_locations, employee, project, works_on CASCADE;
 
 -- Creating my tables
-
 CREATE TABLE employee (
 	fname TEXT NOT NULL,
 	mname CHAR NULL,
@@ -58,14 +62,14 @@ CREATE TABLE dependent(
 
 -- Insert into table
 
-INSERT INTO employee VALUES ('John', 'B', 'Smith', '123123123', '1965-01-09', '731 Fondren, Houston, TX', 'M', '300000', '333445555', '5');
+INSERT INTO employee VALUES ('John', 'B', 'Smith', '123456789', '1965-01-09', '731 Fondren, Houston, TX', 'M', '300000', '333445555', '5');
 INSERT INTO department VALUES ('Research', '5', '333445555', '1988-05-22');
 INSERT INTO dependent VALUES ('333445555', 'Theodore', 'M', '1983-10-25', 'Son');
 INSERT INTO dept_locations VALUES ('1', 'Houston');
 INSERT INTO project VALUES ('ProductX', '1', 'Bellaire', '5');
 INSERT INTO works_on VALUES('123456789', '1', '32.5');
 
-INSERT INTO employee VALUES ('Franklin', 'T', 'Wong', '333445555', '1955-12-08', '638 Voss, Houston, TX', 'M', '40000', '88665555', '5');
+INSERT INTO employee VALUES ('Franklin', 'T', 'Wong', '333445555', '1955-12-08', '638 Voss, Houston, TX', 'M', '40000', '888665555', '5');
 INSERT INTO department VALUES ('Administration', '4', '987654321', '1995-01-01');
 INSERT INTO dependent VALUES ('333445555', 'Alice', 'F', '1986-04-05', 'Daughter');
 INSERT INTO dept_locations VALUES ('4', 'Stafford');
@@ -77,8 +81,8 @@ INSERT INTO works_on (Essn, Pno, Hours) VALUES ('453453453', '2', '25');
 INSERT INTO employee VALUES ('Alicia', 'J', 'Zelaya', '999887777', '1968-01-19', '3321 Castle, Spring, TX', 'F', '25000', '987654321', '4');
 INSERT INTO employee VALUES ('Jennifer', 'S', 'Wallace', '987654321', '1941-06-20', '291 Berry, Bellaire, TX', 'F', '43000', '888665555', '4');
 INSERT INTO employee VALUES ('Ramesh', 'K', 'Narayan', '666884444', '1962-09-15', '975 Fire Oak, Humble, TX', 'M', '38000', '333445555', '5');
-INSERT INTO employee VALUES ('Joyce', 'A', 'English', '45353453', '1972-07-31', '5631 Rice, Houston, TX', 'F', '25000', '333445555', '5');
-INSERT INTO employee VALUES ('Ahmad', 'V', 'Jabbar', '987987987', '1969-07-31', '980 Dallas, Houston, TX', 'F', '25000', '987654321', '4');
+INSERT INTO employee VALUES ('Joyce', 'A', 'English', '453453453', '1972-07-31', '5631 Rice, Houston, TX', 'F', '25000', '333445555', '5');
+INSERT INTO employee VALUES ('Ahmad', 'V', 'Jabbar', '987987987', '1969-03-21', '980 Dallas, Houston, TX', 'F', '25000', '987654321', '4');
 INSERT INTO employee VALUES ('James', 'E', 'Borg', '888665555', '1937-11-10', '450 Stone, Houston, TX', 'M', '55000', NULL, '1');
 
 INSERT INTO department VALUES ('Headquarters', '1', '888665555', '1981-06-19');
@@ -111,6 +115,16 @@ INSERT INTO works_on VALUES ('987654321', '30', '20.0');
 INSERT INTO works_on VALUES ('987654321', '20', '15.0');
 INSERT INTO works_on VALUES ('888665555', '20', '10.0');
 
+-- Adding foreign keys to certain tables
+ALTER TABLE department ADD FOREIGN KEY (mgr_ssn) REFERENCES employee (ssn);
+ALTER TABLE employee ADD FOREIGN KEY (Super_ssn) REFERENCES employee (ssn);
+ALTER TABLE employee ADD FOREIGN KEY (Dno) REFERENCES department (Dnumber);
+ALTER TABLE dept_locations ADD FOREIGN KEY (Dnumber) REFERENCES department (Dnumber);
+ALTER TABLE project ADD FOREIGN KEY (Dnum) REFERENCES department (Dnumber);
+ALTER TABLE works_on ADD FOREIGN KEY (Essn) REFERENCES employee (ssn);
+ALTER TABLE works_on ADD FOREIGN KEY (Pno) REFERENCES project (Pnumber);
+ALTER TABLE dependent ADD FOREIGN KEY (Essn) REFERENCES employee (ssn);
+
 -- To view all the tables
 SELECT * FROM department;
 SELECT * FROM dependent;
@@ -119,8 +133,5 @@ SELECT * FROM employee;
 SELECT * FROM project;
 SELECT * FROM works_on;
 
-ALTER TABLE department ADD FOREIGN KEY (mgr_ssn) REFERENCES employee(ssn)
-
-
-
-
+DELETE FROM works_on WHERE pno = '30';
+DELETE FROM project WHERE pnumber = '30';

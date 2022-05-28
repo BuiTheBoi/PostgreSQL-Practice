@@ -15,4 +15,4 @@ This repository will document my code as I go through tutorials/practice problem
 
 [Data Camp](https://www.datacamp.com/?gclid=CjwKCAjwyryUBhBSEiwAGN5OCNygLuTdR2CtNEbWsDfTs4fJn1zVVlh3aA_Ra3Fwrwu-A2pay273uxoCf_YQAvD_BwE)
 
-[PostgreSQL Practice](https://pgexercises.com/)
+[PostgreSQL Practice With Facility Database](https://pgexercises.com/)

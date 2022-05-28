@@ -60,11 +60,11 @@ SELECT fname, lname
 FROM employee
 WHERE NOT Exists (SELECT * FROM dependent WHERE ssn = essn);
 
--- Name of managers who have at least 1 dependence
+-- Name of MANAGERS who have AT LEAST 1 dependence
 SELECT fname, lname
 FROM employee
 WHERE EXISTS (SELECT * FROM dependent WHERE ssn = essn) 
-AND EXISTS (SELECT * FROM department WHERE mgr_ssn = ssn);
+AND EXISTS (SELECT * FROM department WHERE ssn = mgr_ssn);
 
 
 
